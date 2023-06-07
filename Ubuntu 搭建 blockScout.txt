@@ -1,0 +1,190 @@
+
+sudo apt install gnupg -y
+sudo apt install gnupg1 -y
+sudo apt install gnupg2 -y
+
+
+# 安装最新的erlang包源，不执行这一步，无法安装最新版本的erlang
+wget https://packages.erlang-solutions.com/erlang-solutions_2.0_all.deb
+sudo dpkg -i erlang-solutions_2.0_all.deb
+
+# 安装 erlang 和 elixir
+sudo apt update
+sudo apt install erlang -y
+sudo apt-get install elixir
+
+# 验证安装结果
+Erlang
+# root@ip-127-0-0-1:/home/ubuntu# erl
+# Erlang/OTP 24 [erts-12.3.1] [source] [64-bit] [smp:2:2] [ds:2:2:10] [async-threads:1] [jit]
+#
+# Eshell V12.3.1  (abort with ^G)
+# 1>    # 退出输入 contrl + g
+#  User switch command
+#  --> q	# 输入 q
+
+Elixir 
+# root@ip-172-31-16-35:/home/ubuntu# iex
+# Erlang/OTP 24 [erts-12.3.1] [source] [64-bit] [smp:2:2] [ds:2:2:10] [async-threads:1] [jit]
+#
+# Interactive Elixir (1.13.0) - press Ctrl+C to exit (type h() ENTER for help)
+# iex(1)>	# 退出输入 contrl + c
+# BREAK: (a)bort (A)bort with dump (c)ontinue (p)roc info (i)nfo
+#       (l)oaded (v)ersion (k)ill (D)b-tables (d)istribution
+# a		# 输入 a
+
+# 或是 使用Ctrl+G进入内部控制台：在iex中按下Ctrl+G，然后输入q，再按下回车键即可退出iex控制台
+
+#安装Node
+# 导入16.x.x的源
+curl -sL https://deb.nodesource.com/setup_16.x | sudo -E bash -
+sudo apt-get install nodejs
+# 验证安装结果
+node -v
+
+#安装Rust
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+# 安装提示，选择1（默认为1）
+# 1) Proceed with installation (default)
+# 2) Customize installation
+# 3) Cancel installation
+1 # 直接回车也可
+#
+# 更新环境变量
+source $HOME/.cargo/env
+source ~/.profile
+
+#安装Libtool
+sudo apt install libtool -y
+
+#安装Inotify-tools
+sudo apt install inotify-tools -y
+
+#安装GCC Compiler
+apt install gcc -y
+
+#安装make
+sudo apt install make -y
+
+#安装AutoMake
+sudo apt install automake -y
+
+#安装G++ Compiler
+sudo apt install g++ -y
+
+#安装GMP（gmp-devel）
+wget https://gmplib.org/download/gmp/gmp-6.2.1.tar.bz2
+# 解压
+tar -xjvf gmp-6.2.1.tar.bz2
+# 编译并安装
+cd gmp-6.2.1
+./configure
+make 
+make check 
+sudo make install
+
+#安装postgresql
+这个参考 Ubuntu 搭建 postgresql文档
+
+部署BlockScout
+git clone https://github.com/poanetwork/blockscout
+cd blockscout
+
+如果您以前已经部署过，请从先前的版本中删除静态资源
+mix phx.digest.clean
+
+
+生成 secret_key_base ，时间比较久需要耐心等待
+mix deps.get
+mix phx.gen.secret
+
+然后添加环境变量
+export DATABASE_URL=postgresql://postgres:postgres@localhost:5432/blockscout
+
+export DB_HOST=localhost
+export DB_PASSWORD=postgres
+export DB_PORT=5432
+export DB_USERNAME=postgres
+
+export SECRET_KEY_BASE="aeSyVwUv93gAVjqs0evXxOmic78D0byNvPbSIvVHF8WEK0kwN7nuQ/S/zJ9qgHfP"
+
+export COIN=DE
+export COIN_NAME=DE
+export PORT=4000
+export NETWORK=DE
+export SUBNETWORK=DE MAINNET
+export ETHEREUM_JSONRPC_VARIANT=geth
+export ETHEREUM_JSONRPC_HTTP_URL="http://localhost:8545"
+export ETHEREUM_JSONRPC_WS_URL="ws://localhost:8546"
+export ETHEREUM_JSONRPC_TRACE_URL="http://localhost:8545"
+export DISABLE_EXCHANGE_RATES=true
+export NETWORK_ICON=/home/centos/logo.png
+export LOGO=/home/centos/logo.png
+
+安装Mix依赖和编译应用程序
+mix do deps.get, local.rebar --force, deps.compile, compile
+# 或者你也可以将其拆解开之后执行，这样有助于更细致地查看运行信息
+mix do deps.get
+mix do local.rebar --force
+mix do deps.compile
+mix do compile
+
+删除、创建和迁移数据库（ecto.drop将从数据库中删除所有数据。如果您不想丢失所有数据，请不要在生产中执行它！）
+mix do ecto.drop, ecto.create, ecto.migrate
+创建和迁移数据库（和上面命令是一样的自己选一个，第一次搭建可以执行上一次的）
+mix do ecto.create, ecto.migrate
+
+安装Node.js依赖
+cd apps/block_scout_web/assets
+npm install && node_modules/webpack/bin/webpack.js --mode production
+
+如果出现如下错误
+gyp WARN EACCES current user does not have permission to access the dev dir "/root/.cache/node-gyp/12.16.1"
+gyp WARN EACCES attempting to reinstall using temporary dev dir "/vdb1/blockscout/blockscout/apps/block_scout_web/assets/node_modules/keccak/.node-gyp"
+gyp WARN install got an error, rolling back install
+gyp WARN install got an error, rolling back install
+gyp ERR! configure error
+gyp ERR! stack Error: EACCES: permission denied, mkdir '/vdb1/blockscout/blockscout/apps/block_scout_web/assets/node_modules/keccak/.node-gyp'
+gyp ERR! System Linux 3.10.0-1127.13.1.el7.x86_64
+gyp ERR! command "/vdb1/blockscout/nodejs/bin/node" "/vdb1/blockscout/nodejs/lib/node_modules/npm/node_modules/node-gyp/bin/node-gyp.js" "rebuild"
+gyp ERR! cwd /vdb1/blockscout/blockscout/apps/block_scout_web/assets/node_modules/keccak
+gyp ERR! node -v v12.16.1
+gyp ERR! node-gyp -v v5.0.5
+gyp ERR! not ok
+npm ERR! code ELIFECYCLE
+npm ERR! errno 1
+npm ERR! keccak@2.1.0 rebuild: `node-gyp rebuild`
+npm ERR! Exit status 1
+npm ERR!
+npm ERR! Failed at the keccak@2.1.0 rebuild script.
+npm ERR! This is probably not a problem with npm. There is likely additional logging output above.
+Keccak bindings compilation fail. Pure JS implementation will be used.
+
+尝试执行命令
+sudo npm install && node_modules/webpack/bin/webpack.js --mode production -g --unsafe-perm
+
+建立用于部署的静态资产，执行命令
+cd apps/block_scout_web/
+mix phx.digest
+
+启用HTTPS
+cd apps/block_scout_web/
+mix phx.gen.cert blockscout blockscout.local
+
+然后配置 /etc/hosts（追加，添加不一样的就行）
+
+vi /etc/hosts
+
+::1 localhost   localhost.localdomain   localhost6  localhost6.localdomain6     blockscout blockscout.local
+127.0.0.1   localhost   localhost.localdomain   localhost4  localhost4.localdomain4     blockscout blockscout.local
+
+启动应用
+回到项目根目录执行命令
+mix phx.server
+
+最后打开浏览器做测试
+http://localhost:4000
+
+
+
+

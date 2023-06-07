@@ -1,0 +1,62 @@
+安装 【postgresql】
+
+首先添加 GPG 密钥：
+wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -
+
+添加存储库
+sudo sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt/ `lsb_release -cs`-pgdg main" >> /etc/apt/sources.list.d/pgdg.list'
+
+安转
+sudo apt update
+sudo apt install postgresql postgresql-contrib
+
+检查PostgreSQL服务状态：执行以下命令来检查PostgreSQL服务是否正在运行：
+sudo service postgresql status
+
+如果服务没有运行，则需要启动它。可以使用以下命令启动PostgreSQL服务：
+sudo service postgresql start
+
+
+如果服务已经在运行，请尝试重新启动它：
+sudo service postgresql restart
+
+检查PostgreSQL配置文件：确保PostgreSQL的配置文件正确设置。默认情况下，PostgreSQL的配置文件位于/etc/postgresql/<version>/main/postgresql.conf，其中<version>是您安装的PostgreSQL版本号。
+
+listen_addresses = '*'      # 填写正确的IP地址或'localhost'
+port = 5432                         # 端口号，默认为5432
+
+
+配置访问控制：接下来，您需要配置PostgreSQL的访问控制列表（ACL）以允许远程主机连接。打开PostgreSQL的主HBA（Host-Based Authentication）配置文件，该文件通常位于/etc/postgresql/<version>/main/目录中，其中<version>是您安装的PostgreSQL版本号。
+
+在文件中找到一个名为pg_hba.conf的文件，打开它进行编辑。在该文件中，您可以指定哪些主机、哪个用户和哪种认证方法被允许连接到PostgreSQL服务器。
+
+例如，要允许所有主机使用密码进行连接，找到以下行：
+
+# Allow remote connections for all IPv4 addresses
+host    all             all             0.0.0.0/0               md5
+
+# Allow remote connections for all IPv6 addresses
+host    all             all             ::/0                    md5
+
+# "local" is for Unix domain socket connections only
+local   all             all                                     md5
+
+# "local" is for Unix domain socket connections only
+local   all             all                                     peer
+
+请注意，md5表示使用密码进行身份验证。如果您希望使用其他认证方法，请根据需要进行更改。
+
+重新启动服务：完成上述配置更改后，保存并关闭配置文件。然后，重新启动PostgreSQL服务以使更改生效：
+sudo service postgresql restart
+
+
+
+在通过apt install命令安装的PostgreSQL中，可以使用以下步骤来修改超级用户（通常是postgres用户）的密码：
+切换到postgres用户：打开终端，并使用以下命令切换到postgres用户：
+sudo -u postgres psql
+
+修改密码：在postgres用户的命令行界面中，使用以下命令
+ALTER USER postgres WITH PASSWORD 'new_password';
+
+
+
