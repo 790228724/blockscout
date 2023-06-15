@@ -58,5 +58,9 @@ sudo -u postgres psql
 修改密码：在postgres用户的命令行界面中，使用以下命令
 ALTER USER postgres WITH PASSWORD 'new_password';
 
+增加最大链接数
+postgres=# show max_connections;
+postgres=# alter system set max_connections=1000;
+
 
 
