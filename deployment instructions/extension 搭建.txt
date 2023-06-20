@@ -1,0 +1,21 @@
+1.搭建visualizer扩展
+https://github.com/blockscout/blockscout-rs/blob/main/visualizer/visualizer-server/src/settings.rs#L51
+
+2.搭建sig-provider扩展
+https://github.com/blockscout/blockscout-rs/blob/main/sig-provider/sig-provider-server/src/settings.rs#L43
+
+3.搭建smart-contract-verifier扩展
+https://github.com/blockscout/blockscout-rs/tree/main/smart-contract-verifier
+
+4. 1 2 步骤需要更改端口号，默认是8050，目前运行的三个扩展都是一样的端口，运行起来会冲突，链接已经指定了，里面还会有用到8051，这个也顺便修改
+
+5. 第3步骤，这个验证合约的扩展可以指定config文件启动，文件内容我放在同目录下了（base.toml）
+
+6.在文件目录编译扩展插件
+cargo build --release --bin smart-contract-verifier-server
+cargo build --release --bin visualizer-server
+cargo build --release --bin sig-provider-verifier-server
+
+7.如果要删除 可以执行 cargo clean ，也可以吧目录下的targer文件删除重新编译
+
+8.运行脚本放在 blockscout-rs下在运行. （extensionScript.sh）
