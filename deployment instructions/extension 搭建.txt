@@ -1,3 +1,15 @@
+
+安装编译环境
+1.sudo apt-get install pkg-config libssl-dev
+
+2.
+https://github.com/grpc-ecosystem/grpc-gateway/releases/tag/v2.16.0
+
+protoc-gen-grpc-gateway-v2.16.0-linux-x86_64
+protoc-gen-openapiv2-v2.16.0-linux-x86_64
+下载上面两个文件，然后改名为  protoc-gen-grpc-gateway protoc-gen-openapiv2  ，放入 /usr/bin 目录下
+
+
 1.搭建visualizer扩展
 https://github.com/blockscout/blockscout-rs/blob/main/visualizer/visualizer-server/src/settings.rs#L51
 
