@@ -99,27 +99,7 @@ mix deps.get
 mix phx.gen.secret
 
 然后添加环境变量
-export DATABASE_URL=postgresql://postgres:postgres@localhost:5432/blockscout
-
-export DB_HOST=localhost
-export DB_PASSWORD=postgres
-export DB_PORT=5432
-export DB_USERNAME=postgres
-
-export SECRET_KEY_BASE="aeSyVwUv93gAVjqs0evXxOmic78D0byNvPbSIvVHF8WEK0kwN7nuQ/S/zJ9qgHfP"
-
-export COIN=DE
-export COIN_NAME=DE
-export PORT=4000
-export NETWORK=DE
-export SUBNETWORK=DE MAINNET
-export ETHEREUM_JSONRPC_VARIANT=geth
-export ETHEREUM_JSONRPC_HTTP_URL="http://localhost:8545"
-export ETHEREUM_JSONRPC_WS_URL="ws://localhost:8546"
-export ETHEREUM_JSONRPC_TRACE_URL="http://localhost:8545"
-export DISABLE_EXCHANGE_RATES=true
-export NETWORK_ICON=/home/centos/logo.png
-export LOGO=/home/centos/logo.png
+PS: 具体见EVN文件
 
 安装Mix依赖和编译应用程序
 mix do deps.get, local.rebar --force, deps.compile, compile
