@@ -172,3 +172,13 @@ block_scout_web/assets/css/theme/custom_contracts/_de_theme.scss
 apps/block_scout_web/assets/css/theme/_variables.scss
 @import "custom_contracts/_de_theme";
 
+#修改折线图的颜色
+1.折线图的主题色
+apps/block_scout_web/assets/css/theme/custom_contracts/_de_theme.scss
+2.添加方法名
+apps/block_scout_web/assets/css/export-vars-to-js.module.scss
+3.修改
+apps/block_scout_web/assets/js/lib/history_chart.js#L29
+
+#修改折线图的数量
+apps/block_scout_web/assets/js/lib/history_chart.js#L64
