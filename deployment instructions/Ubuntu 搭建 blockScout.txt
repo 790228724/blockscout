@@ -182,3 +182,6 @@ apps/block_scout_web/assets/js/lib/history_chart.js#L29
 
 #修改折线图的数量
 apps/block_scout_web/assets/js/lib/history_chart.js#L64
+
+#修改时间x轴显示英文
+/apps/block_scout_web/assets/js/lib 68行
