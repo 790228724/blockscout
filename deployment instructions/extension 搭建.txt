@@ -20,6 +20,7 @@
 1.搭建visualizer扩展
 废弃：https://github.com/blockscout/blockscout-rs/blob/main/visualizer/visualizer-server/src/settings.rs#L51
 最新的修改端口是在visualizer-server/config 目录下 有个base.toml 配置文件
+
 2.搭建sig-provider扩展
 废弃：https://github.com/blockscout/blockscout-rs/blob/main/sig-provider/sig-provider-server/src/settings.rs#L43
 最新的修改端口是在sig-provider/config 目录下 有个base.toml 配置文件
@@ -34,7 +35,7 @@ https://github.com/blockscout/blockscout-rs/tree/main/smart-contract-verifier
 6.在文件目录编译扩展插件
 cargo build --release --bin smart-contract-verifier-server
 cargo build --release --bin visualizer-server
-cargo build --release --bin sig-provider-verifier-server
+cargo build --release --bin sig-provider-server
 
 7.如果要删除 可以执行 cargo clean ，也可以吧目录下的targer文件删除重新编译
 
